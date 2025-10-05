@@ -4,3 +4,7 @@ pydantic==2.*
 
 
 
+
+SQLAlchemy==2.*
+alembic==1.*
+python-dotenv==1.*
