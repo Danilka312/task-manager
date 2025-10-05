@@ -33,11 +33,12 @@ class TokenPair(BaseModel):
     refresh: str
 
 
-@router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/register", response_model=TokenPair, status_code=status.HTTP_201_CREATED)
 def register(body: RegisterBody, db: Annotated[Session, Depends(get_db)]):
     existing = db.query(UserORM).filter(UserORM.email == body.email).first()
     if existing:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
+        # Follow API contract: 400 with specific detail code
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="email_taken")
 
     user = UserORM(
         email=body.email,
@@ -48,7 +49,9 @@ def register(body: RegisterBody, db: Annotated[Session, Depends(get_db)]):
     db.add(user)
     db.commit()
     db.refresh(user)
-    return UserResponse(id=user.id, email=user.email, full_name=user.full_name, created_at=user.created_at)
+
+    claims = {"sub": user.email}
+    return TokenPair(access=create_access_token(claims), refresh=create_refresh_token(claims))
 
 
 @router.post("/login", response_model=TokenPair)
