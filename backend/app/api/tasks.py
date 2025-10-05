@@ -24,13 +24,24 @@ def list_endpoint(
     q: Optional[str] = Query(None),
     due_from: Optional[date] = Query(None),
     due_to: Optional[date] = Query(None),
+    sort: Optional[str] = Query("created_at"),
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
     db: Session = Depends(get_db),
     user: UserORM = Depends(get_current_user),
 ):
-    items, total = list_tasks(db, user.id, status=status, priority=priority, q=q,
-                              due_from=due_from, due_to=due_to, page=page, page_size=page_size)
+    items, total = list_tasks(
+        db,
+        user.id,
+        status=status,
+        priority=priority,
+        q=q,
+        due_from=due_from,
+        due_to=due_to,
+        sort=sort,
+        page=page,
+        page_size=page_size,
+    )
     return TaskList(items=items, total=total, page=page, page_size=page_size)
 
 
