@@ -16,13 +16,13 @@ function Topbar() {
     location.href = "/login";
   };
   return (
-    <div className="w-full border-b bg-white/70 backdrop-blur sticky top-0 z-10">
-      <div className="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
-        <Link to="/app" className="font-bold text-lg">Task<span className="text-blue-600">Manager</span></Link>
+    <div className="bg-white/80 backdrop-blur border-b sticky top-0 z-10">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
+        <Link to="/app" className="font-bold text-lg">Task<span className="text-indigo-600">Manager</span></Link>
         <nav className="flex items-center gap-4">
-          <Link to="/app" className="hover:text-blue-600 transition">Board</Link>
-          <Link to="/analytics" className="hover:text-blue-600 transition">Analytics</Link>
-          <button onClick={logout} className="ml-2 rounded-xl border px-3 py-1.5 hover:bg-gray-50">Logout</button>
+          <Link to="/app" className="hover:text-indigo-600 transition">Board</Link>
+          <Link to="/analytics" className="hover:text-indigo-600 transition">Analytics</Link>
+          <button onClick={logout} className="rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 px-3 py-1.5 transition">Logout</button>
         </nav>
       </div>
     </div>
@@ -38,10 +38,12 @@ export default function App() {
           path="/app"
           element={
             <Private>
-              <div className="min-h-screen bg-gray-50">
+              <div className="min-h-screen">
                 <Topbar />
-                <main className="mx-auto max-w-6xl px-4 py-6">
-                  <Board />
+                <main className="min-h-[calc(100vh-64px)] grid place-items-center px-4 md:px-6 py-6">
+                  <div className="w-full max-w-5xl mx-auto">
+                    <Board />
+                  </div>
                 </main>
               </div>
             </Private>
@@ -51,10 +53,12 @@ export default function App() {
           path="/analytics"
           element={
             <Private>
-              <div className="min-h-screen bg-gray-50">
+              <div className="min-h-screen">
                 <Topbar />
-                <main className="mx-auto max-w-6xl px-4 py-6">
-                  <Analytics />
+                <main className="min-h-[calc(100vh-64px)] grid place-items-center px-4 md:px-6 py-6">
+                  <div className="w-full max-w-5xl mx-auto">
+                    <Analytics />
+                  </div>
                 </main>
               </div>
             </Private>
