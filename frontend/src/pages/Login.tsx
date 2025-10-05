@@ -32,22 +32,24 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen grid place-items-center p-4">
-      <form onSubmit={onSubmit} className="w-full max-w-sm bg-white rounded-2xl border shadow p-6 space-y-4">
-        <div className="text-xl font-semibold">Sign in</div>
-        {error && <div className="text-red-600 text-sm">{error}</div>}
-        <div className="space-y-1">
-          <label className="text-sm text-slate-600">Email</label>
-          <input value={email} onChange={e=>setEmail(e.target.value)} type="email" className="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-300" />
-        </div>
-        <div className="space-y-1">
-          <label className="text-sm text-slate-600">Password</label>
-          <input value={password} onChange={e=>setPassword(e.target.value)} type="password" className="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-slate-300" />
-        </div>
-        <button disabled={loading} className="w-full rounded-xl bg-slate-900 text-white py-2 hover:bg-slate-800 transition disabled:opacity-60">
-          {loading ? 'Signing in...' : 'Sign in'}
-        </button>
-      </form>
+    <div className="min-h-[70vh] grid place-items-start md:place-items-center">
+      <div className="max-w-5xl w-full mx-auto px-4 md:px-6">
+        <form onSubmit={onSubmit} className="w-full max-w-sm mx-auto bg-white shadow-sm rounded-xl border border-slate-200 p-6 space-y-4">
+          <div className="text-xl font-semibold">Sign in</div>
+          {error && <div className="text-rose-600 text-sm">{error}</div>}
+          <div className="space-y-1">
+            <label className="text-sm text-slate-600">Email</label>
+            <input value={email} onChange={e=>setEmail(e.target.value)} type="email" className="w-full bg-white text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+          </div>
+          <div className="space-y-1">
+            <label className="text-sm text-slate-600">Password</label>
+            <input value={password} onChange={e=>setPassword(e.target.value)} type="password" className="w-full bg-white text-slate-900 placeholder:text-slate-400 border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+          </div>
+          <button disabled={loading} className="w-full rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white py-2 transition disabled:opacity-60">
+            {loading ? 'Signing in...' : 'Sign in'}
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

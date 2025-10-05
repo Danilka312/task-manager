@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html, body, #root { height: 100%; }
-body { @apply bg-slate-50 text-slate-900; }
+body { @apply bg-slate-50 text-slate-800; }
 
 @tailwind base;
 @tailwind components;
