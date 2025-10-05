@@ -1,11 +1,12 @@
 from typing import Optional, Tuple, List
-from datetime import date
+from datetime import date, datetime, timezone
 from sqlalchemy.orm import Session
 from sqlalchemy import func, select
 from app.infra.models import TaskORM
 
 
 def create_task(db: Session, user_id: int, data) -> TaskORM:
+    now = datetime.now(timezone.utc)
     task = TaskORM(
         user_id=user_id,
         title=data.title,
@@ -13,8 +14,12 @@ def create_task(db: Session, user_id: int, data) -> TaskORM:
         due_date=data.due_date,
         priority=data.priority or "medium",
         status="todo",
+        created_at=now,          # <-- добавили
+        updated_at=now,          # <-- добавили
     )
-    db.add(task); db.commit(); db.refresh(task)
+    db.add(task)
+    db.commit()
+    db.refresh(task)
     return task
 
 
@@ -42,7 +47,8 @@ def update_task(db: Session, user_id:int, task_id:int, data) -> Optional[TaskORM
     if not task or task.user_id != user_id: return None
     for field, value in data.model_dump(exclude_unset=True).items():
         setattr(task, field, value)
-        if field=="status" and value=="done": from datetime import datetime; task.completed_at=datetime.utcnow()
+        if field=="status" and value=="done":
+            task.completed_at = datetime.now(timezone.utc)
     db.commit(); db.refresh(task)
     return task
 
