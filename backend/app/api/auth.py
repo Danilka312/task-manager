@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -43,7 +43,7 @@ def register(body: RegisterBody, db: Annotated[Session, Depends(get_db)]):
         email=body.email,
         password_hash=hash_password(body.password),
         full_name=body.full_name,
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
     db.add(user)
     db.commit()

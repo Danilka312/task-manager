@@ -1,6 +1,6 @@
 from datetime import date, datetime
 from typing import Optional, Literal, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 Priority = Literal["low","medium","high","urgent"]
 Status   = Literal["todo","in_progress","done"]
@@ -32,8 +32,7 @@ class TaskRead(BaseModel):
     updated_at: datetime
     completed_at: Optional[datetime]
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class TaskList(BaseModel):
