@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, Text, Date, Enum, ForeignKey, Index
+from sqlalchemy import Column, Integer, String, DateTime, Text, Date, Enum, ForeignKey, Index, func
 from sqlalchemy.orm import relationship
 from app.infra.db import Base
 
@@ -14,7 +14,7 @@ class UserORM(Base):
     email = Column(String(320), unique=True, index=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     full_name = Column(String(200), nullable=True)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     tasks = relationship("TaskORM", back_populates="user", cascade="all,delete-orphan")
 
 
@@ -27,9 +27,9 @@ class TaskORM(Base):
     due_date = Column(Date, nullable=True)
     priority = Column(Enum(*PriorityEnum, name="priority_enum"), default="medium", nullable=False)
     status = Column(Enum(*TaskStatusEnum, name="status_enum"), default="todo", nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
-    completed_at = Column(DateTime, nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+    completed_at = Column(DateTime(timezone=True), nullable=True)
 
     user = relationship("UserORM", back_populates="tasks")
 
