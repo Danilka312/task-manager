@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate, Link, useLocation } from "react
 import Login from "./pages/Login";
 import Board from "./pages/Board";
 import Analytics from "./pages/Analytics";
+import Calendar from "./pages/Calendar";
 import { initTheme, getTheme, setTheme, type ThemeMode } from "./store/theme";
 
 function Private({ children }: { children: JSX.Element }) {
@@ -29,6 +30,7 @@ function Topbar() {
       <nav className="flex items-center gap-2 md:gap-4">
         <Link to="/app" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Board</Link>
         <Link to="/analytics" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Analytics</Link>
+        <Link to="/calendar" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition">Calendar</Link>
         <button onClick={toggle} className="rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-100 px-3 py-1.5 transition">
           {theme === 'dark' ? 'Light' : 'Dark'}
         </button>
@@ -75,6 +77,21 @@ export default function App() {
           }
         />
         <Route path="/" element={<Navigate to="/app" replace />} />
+        <Route
+          path="/calendar"
+          element={
+            <Private>
+              <div className="w-full min-h-screen">
+                <header className="border-b border-slate-200 dark:border-slate-800">
+                  <Topbar />
+                </header>
+                <main className="max-w-6xl mx-auto px-4 py-8">
+                  <Calendar />
+                </main>
+              </div>
+            </Private>
+          }
+        />
         <Route path="*" element={<Navigate to="/app" replace />} />
       </Routes>
     </BrowserRouter>

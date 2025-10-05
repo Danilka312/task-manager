@@ -32,14 +32,7 @@ export default function AnalyticsPage() {
     ]
   }, [data])
 
-  const widthClass = (ratio: number) => {
-    const step = Math.round(ratio * 12)
-    const clamped = Math.max(0, Math.min(12, step))
-    return [
-      'w-0','w-1/12','w-2/12','w-3/12','w-4/12','w-5/12','w-6/12',
-      'w-7/12','w-8/12','w-9/12','w-10/12','w-11/12','w-full'
-    ][clamped]
-  }
+  // reserved for potential future use: segment width helper
 
   return (
     <div className="space-y-6">

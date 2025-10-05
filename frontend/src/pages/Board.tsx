@@ -149,6 +149,14 @@ export default function BoardPage() {
                     {t.priority}
                   </span>
                 </div>
+                {t.description && (
+                  <div
+                    className="text-sm text-slate-700 dark:text-slate-300"
+                    title={t.description || undefined}
+                  >
+                    {t.description.length > 100 ? t.description.slice(0, 100) + '…' : t.description}
+                  </div>
+                )}
                 {t.due_date && <div className="text-xs text-slate-600 dark:text-slate-300">Due: {t.due_date}</div>}
                 <div className="flex flex-wrap gap-2 pt-1">
                   <button
